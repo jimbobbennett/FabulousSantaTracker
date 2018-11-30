@@ -8,7 +8,7 @@ module TrackingData
 
     let epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
 
-    let isTestingMode = true
+    let isTestingMode = false
 
     let mutable offsetForTesting = TimeSpan.FromMilliseconds(0.)
 
