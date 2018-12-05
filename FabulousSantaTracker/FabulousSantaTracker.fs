@@ -6,59 +6,29 @@ open Fabulous.Core
 open Fabulous.DynamicViews
 open Xamarin.Forms
 open Xamarin.Forms.Maps
-open Plugin.Permissions
-open Plugin.Permissions.Abstractions
 
 open TrackingData
 
 module App = 
     type Model = 
         {
-            Destinations : Destinations
             CurrentDestination : Destination
-            CurrentTime : DateTime
-            ShowCurrentUser : bool
         }
 
     type Msg = 
-        | TimerTick of DateTime
-        | SetLocationPermission of bool
+        | TimerTick
 
-    let requestPermissions = 
-        async {
-            try
-                let! status = CrossPermissions.Current.CheckPermissionStatusAsync(Permission.LocationWhenInUse) |> Async.AwaitTask
-                if status = PermissionStatus.Granted then
-                    return (SetLocationPermission)true
-                else
-                    let! status = CrossPermissions.Current.RequestPermissionsAsync([| Permission.LocationWhenInUse |]) |> Async.AwaitTask
-                    let granted = status.[Permission.LocationWhenInUse] = PermissionStatus.Granted || status.[Permission.LocationWhenInUse] = PermissionStatus.Unknown
-                    return (SetLocationPermission)granted
-            with exn ->
-                return (SetLocationPermission)false
-        }
+    let currentDestination () =
+        let current = TrackingData.AllDestinations |> Array.tryFindBack (fun i -> i.ArrivalDateTime < DateTime.UtcNow)
+        match current with
+        | Some d -> d
+        | None -> TrackingData.AllDestinations |> Array.item 0
 
-    let currentDestination (destinations : Destinations) dateTime =
-        let first = destinations |> Array.item 0
-        if (dateTime < first.ArrivalDateTime) then
-            first
-        else
-           destinations |> Array.findBack (fun i -> i.ArrivalDateTime < dateTime)
-
-    let initModel = 
-        { 
-            Destinations = AllDestinations
-            CurrentDestination = (currentDestination AllDestinations DateTime.UtcNow)
-            CurrentTime = DateTime.UtcNow
-            ShowCurrentUser = false
-        }
-
-    let init () = initModel, (requestPermissions |> Cmd.ofAsyncMsg)
+    let init () = { CurrentDestination = currentDestination() }, Cmd.none
 
     let update msg model =
         match msg with
-        | TimerTick d -> { model with CurrentDestination = (currentDestination model.Destinations d); CurrentTime = d }, Cmd.none
-        | SetLocationPermission b -> { model with ShowCurrentUser = b }, Cmd.none
+        | TimerTick -> { model with CurrentDestination = currentDestination() }, Cmd.none
 
     let inline stringf format (x : ^a) = 
         (^a : (member ToString : string -> string) (x, format))
@@ -107,10 +77,9 @@ module App =
                                     )
                                 ]
                             ).GridRow(1)
-                            View.CustomMap(
+                            View.SantaMap(
                                 hasZoomEnabled = true,
                                 hasScrollEnabled = true,
-                                isShowingUser = model.ShowCurrentUser,
                                 requestedRegion = MapSpan.FromCenterAndRadius(model.CurrentDestination.Position, Distance.FromKilometers(1000.0)),
                                 pins = [ 
                                     View.Pin(
@@ -128,7 +97,7 @@ module App =
 
     let timerTick dispatch =
         let timer = new Timer(TimeSpan.FromSeconds(10.).TotalMilliseconds)
-        timer.Elapsed.Subscribe (fun _ -> dispatch (TimerTick System.DateTime.Now)) |> ignore
+        timer.Elapsed.Subscribe (fun _ -> dispatch TimerTick) |> ignore
         timer.Enabled <- true
         timer.Start()
 

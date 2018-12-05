@@ -26,5 +26,5 @@ type SantaMapRenderer() =
 
 
 module Export_SantaMapRenderer =
-    [<assembly: ExportRenderer(typeof<CustomMap>, typeof<SantaMapRenderer>) >]
+    [<assembly: ExportRenderer(typeof<SantaMap>, typeof<SantaMapRenderer>) >]
     do ()

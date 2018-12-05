@@ -13,7 +13,6 @@ open Xamarin.Forms
 open Xamarin.Forms.Platform.Android
 open Xamarin.Forms.Maps
 open Plugin.CurrentActivity
-open Plugin.Permissions
 
 [<Activity (Label = "Santa Tracker", Icon = "@mipmap/icon", Theme = "@style/MainTheme.Launcher", MainLauncher = true, ConfigurationChanges = (ConfigChanges.ScreenSize ||| ConfigChanges.Orientation))>]
 type MainActivity() =
@@ -35,5 +34,4 @@ type MainActivity() =
                                  
     override this.OnRequestPermissionsResult(requestCode: int, permissions: string[], [<GeneratedEnum>] grantResults: Android.Content.PM.Permission[]) =
         Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults)
-        PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults)
         base.OnRequestPermissionsResult(requestCode, permissions, grantResults)

@@ -1,6 +1,6 @@
 ﻿namespace FabulousSantaTracker
 
-type CustomMap() =
+type SantaMap() =
     inherit Xamarin.Forms.Maps.Map()
 
 [<AutoOpen>]
@@ -11,13 +11,13 @@ module MapsExtension =
     
     type Fabulous.DynamicViews.View with
         /// Describes a Map in the view
-        static member inline CustomMap(?pins: seq<ViewElement>, ?isShowingUser: bool, ?mapType: MapType, ?hasScrollEnabled: bool,
-                                 ?hasZoomEnabled: bool, ?requestedRegion: MapSpan,
-                                 // inherited attributes common to all views
-                                 ?horizontalOptions, ?verticalOptions, ?margin, ?gestureRecognizers, ?anchorX, ?anchorY, ?backgroundColor,
-                                 ?heightRequest, ?inputTransparent, ?isEnabled, ?isVisible, ?minimumHeightRequest, ?minimumWidthRequest,
-                                 ?opacity, ?rotation, ?rotationX, ?rotationY, ?scale, ?style, ?translationX, ?translationY, ?widthRequest,
-                                 ?resources, ?styles, ?styleSheets, ?classId, ?styleId, ?automationId, ?created, ?styleClass) =
+        static member inline SantaMap(?pins: seq<ViewElement>, ?isShowingUser: bool, ?mapType: MapType, ?hasScrollEnabled: bool,
+                                          ?hasZoomEnabled: bool, ?requestedRegion: MapSpan,
+                                          // inherited attributes common to all views
+                                          ?horizontalOptions, ?verticalOptions, ?margin, ?gestureRecognizers, ?anchorX, ?anchorY, ?backgroundColor,
+                                          ?heightRequest, ?inputTransparent, ?isEnabled, ?isVisible, ?minimumHeightRequest, ?minimumWidthRequest,
+                                          ?opacity, ?rotation, ?rotationX, ?rotationY, ?scale, ?style, ?translationX, ?translationY, ?widthRequest,
+                                          ?resources, ?styles, ?styleSheets, ?classId, ?styleId, ?automationId, ?created, ?styleClass) =
 
             // Count the number of additional attributes
             let attribCount = 0
@@ -59,4 +59,4 @@ module MapsExtension =
                 source.UpdatePrimitive(prevOpt, target, MapRequestingRegionAttribKey, (fun target v -> target.MoveToRegion(v)))
 
             // The element
-            ViewElement.Create<CustomMap>(CustomMap, update, attribs)
+            ViewElement.Create<SantaMap>(SantaMap, update, attribs)

@@ -30,8 +30,6 @@
 	<string>Santa Tracker</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Fabulous Sants tracker needs to know where you are so it can show how close Santa is to you!</string>
 	<key>CFBundleIdentifier</key>
 	<string>io.jimbobbennett</string>
 </dict>

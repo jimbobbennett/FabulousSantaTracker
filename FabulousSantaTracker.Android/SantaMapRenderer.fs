@@ -17,5 +17,5 @@ type SantaMapRenderer(context : Context) =
                              .SetIcon(BitmapDescriptorFactory.FromResource(Resources.Drawable.Santa))
 
 module Export_SantaMapRenderer =
-    [<assembly: ExportRenderer(typeof<CustomMap>, typeof<SantaMapRenderer>) >]
+    [<assembly: ExportRenderer(typeof<SantaMap>, typeof<SantaMapRenderer>) >]
     do ()
