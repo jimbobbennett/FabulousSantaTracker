@@ -13,4 +13,4 @@ You can read the blog post on this at https://jimbobbennett.io/fabulous-santa-tr
 This code will compile and run on both Android and iOS in Visual Studio on Windows and Mac.
 
 For iOS the app will run on a simulator without any tweaks. To run on a device you will need to sign with your provisioning profile.
-For Android you will need a Google Maps key. The [docs here](https://docs.microsoft.com/xamarin/android/platform/maps-and-location/maps/obtaining-a-google-maps-api-key?WT.mc_id=maps-blog-jabenn) explain how to set this up.
+For Android you will need a Google Maps key. The [docs here](https://docs.microsoft.com/xamarin/android/platform/maps-and-location/maps/obtaining-a-google-maps-api-key?WT.mc_id=santa-blog-jabenn) explain how to set this up.
